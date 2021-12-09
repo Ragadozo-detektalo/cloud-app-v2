@@ -1,0 +1,11 @@
+FROM node:12-alpine as builder
+
+WORKDIR /workdir
+
+COPY . .
+
+RUN npm set unsafe-perm true
+RUN npm install
+RUN npx nx run api:build
+
+CMD node /workdir/dist/apps/api/main

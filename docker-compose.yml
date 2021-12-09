@@ -5,5 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: projectmunka
       MYSQL_DATABASE: projectmunka
+  api:
+    build:
+        dockerfile: Dockerfile.api
     ports:
-      - "3306:3306"
+      - "3333:3333"
