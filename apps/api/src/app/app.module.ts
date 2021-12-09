@@ -9,7 +9,7 @@ import { AlertEntity } from './entities/alert.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'db',
+      host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'projectmunka',

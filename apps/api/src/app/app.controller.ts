@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Param, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 
-import { AppService } from './app.service';
+import { AggregatedDataSeries, AppService } from './app.service';
 import { AlertEntity } from './entities/alert.entity';
-import { ApiBody, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('data')
 export class AppController {
@@ -11,6 +11,11 @@ export class AppController {
   @Get()
   all(): Promise<AlertEntity[]> {
     return this.appService.all();
+  }
+
+  @Get('by-days')
+  aggregatedByDay(): Promise<AggregatedDataSeries[]> {
+    return this.appService.aggregatedByDay();
   }
 
   @Put(':date/:time')
