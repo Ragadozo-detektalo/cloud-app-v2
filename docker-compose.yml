@@ -5,8 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: projectmunka
       MYSQL_DATABASE: projectmunka
-    ports:
-      - "3306:3306"
+#    ports:
+#      - "3306:3306"
 
   api:
     build:
