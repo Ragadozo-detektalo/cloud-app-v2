@@ -1,0 +1,16 @@
+FROM node:12-alpine as builder
+
+WORKDIR /workdir
+
+COPY . .
+
+RUN npm set unsafe-perm true
+RUN npm install
+RUN npx nx run client:build
+
+FROM nginx:alpine as runner
+
+COPY --from=builder /workdir/dist/apps/client /usr/share/nginx/html
+COPY --from=builder /workdir/nginx.conf /etc/nginx/nginx.conf
+
+CMD ["nginx", "-g", "daemon off;"]
