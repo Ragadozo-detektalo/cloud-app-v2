@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  Get,
+  Param,
+  Put,
+  Req,
+} from '@nestjs/common';
 
 import { AggregatedDataSeries, AppService } from './app.service';
 import { AlertEntity } from './entities/alert.entity';
-import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiHeaders, ApiParam } from '@nestjs/swagger';
+import { Request } from 'express';
 
 @Controller('data')
 export class AppController {
@@ -36,11 +45,22 @@ export class AppController {
       'defaut example': { value: ['cat', 'mouse'] },
     },
   })
+  @ApiHeaders([
+    {
+      name: 'authorization',
+      example: 'projectmunka',
+    },
+  ])
   async post(
     @Body() subjectList: string[],
     @Param('date') date: string,
-    @Param('time') time: string
+    @Param('time') time: string,
+    @Req() request: Request
   ): Promise<void> {
+    if (request.headers.authorization !== 'projectmunka') {
+      throw new ForbiddenException();
+    }
+
     subjectList = subjectList.filter((item) => !!item);
     if (!subjectList.length) {
       return;

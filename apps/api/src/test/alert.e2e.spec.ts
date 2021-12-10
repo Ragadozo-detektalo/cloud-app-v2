@@ -10,6 +10,7 @@ const createTestData = (
   for (let i = 1; i <= count; i++) {
     app
       .put('/api/data/' + date + '/' + timeBase + i)
+      .set('authorization', 'projectmunka')
       .send([subject])
       .end();
   }
@@ -20,6 +21,7 @@ describe('data seed', () => {
 
   beforeAll(() => {
     app = agent('http://localhost:3333');
+    // app = agent('http://projectmunka.aruqen.hu');
   });
 
   it('should seed db', () => {
